@@ -2,14 +2,15 @@ const express = require('express');
 const Router = express.Router();
 const axios = require('axios');  
 
-const OMDB_API_KEY='6c26aa07';
+const OMDB_API_KEY=process.env.OMDB_API_KEY;
+const OMDB_URL=process.env.OMDB_URL;
 
 
 
 Router.get('/search', (req, res) => {
     // query parameter
     const search = req.query.title;
-    const url = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${search}`
+    const url = `${OMDB_URL}?apikey=${OMDB_API_KEY}&s=${search}`
     axios.get(url)
       .then(function (response) {
           // handle success
@@ -24,7 +25,7 @@ Router.get('/search', (req, res) => {
 Router.get('/result/:imdbId', (req, res) => {
     // route parameter
     const imdbId = req.params.imdbId;
-    const url = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${imdbId}`
+    const url = `${OMDB_URL}?apikey=${OMDB_API_KEY}&i=${imdbId}`
     axios.get(url)
       .then(function (response) {
           // handle success
